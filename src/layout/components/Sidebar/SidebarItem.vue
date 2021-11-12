@@ -28,9 +28,9 @@
 <script>
 import path from 'path';
 import {isExternal} from '@/utils/validata';
-import Item from './Item';
-import AppLink from './Link';
-import FixiOSBug from '@/layout/components/Sidebar/FixiOSBug'
+import Item from './Item.vue';
+import AppLink from './Link.vue';
+import FixiOSBug from '@/layout/components/Sidebar/FixiOSBug.js'
 
 export default {
   name: 'SidebarItem',
@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
-      console.log('you came here')
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false;

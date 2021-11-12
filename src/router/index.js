@@ -58,7 +58,6 @@ const router  = new Router({
   scrollBehavior: () => ({y:0}),
   routes: constantRoutes,
 })
-console.log('router',router)
 
 // export function resetRouter() {
 //   const newRouter = createRouter()

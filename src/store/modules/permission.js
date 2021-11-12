@@ -14,7 +14,6 @@ function hasPermission(roles, route) {
   }
 }
 
-
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes asyncRoutes
@@ -22,7 +21,6 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = [];
-
   routes.forEach(route => {
     const tmp = {...route};
     if (hasPermission(roles, tmp)) {
@@ -49,7 +47,6 @@ const mutations = {
   }
 };
 
-
 const actions = {
   generateRoutes({commit}, roles) {
     return new Promise(((resolve) => {
@@ -60,8 +57,6 @@ const actions = {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
       }
       commit('SET_ROUTES', accessedRoutes);
-      console.log('accessedRoutes')
-      console.log(accessedRoutes)
       resolve(accessedRoutes);
     }));
   }

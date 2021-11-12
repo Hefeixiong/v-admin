@@ -27,7 +27,6 @@ export default {
     if (title) {
       vnodes.push(<span slot='title'>{(title)}</span>)
     }
-    console.log('vnodes is'+vnodes)
     return vnodes
   }
 }

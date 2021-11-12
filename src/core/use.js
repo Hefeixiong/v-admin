@@ -1,10 +1,6 @@
 import Vue from 'vue'
 
-
 import VueStorage from 'vue-ls'
-
-
-
 
 // vue-ls options
 // 缓存方案

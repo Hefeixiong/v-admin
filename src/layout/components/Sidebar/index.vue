@@ -38,6 +38,7 @@ export default {
       return path
     },
     routes(){
+      // debugger
       const x = this.$store.state.permission.routes
       console.log('item route',x)
       return x

@@ -8,14 +8,16 @@ import 'nprogress/nprogress.css'; // progress bar style
 
 NProgress.configure({showSpinner: false}); // NProgress Configuration
 
-import {notification} from 'ant-design-vue';
-import {ACCESS_TOKEN} from "@/store/mutation-types";
+// import {notification} from 'ant-design-vue';
+// import {ACCESS_TOKEN} from "@/store/mutation-types";
 
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
-  const token = Vue.ls.get(ACCESS_TOKEN);
-  if (token) {
+  // const token = Vue.ls.get(ACCESS_TOKEN);
+  const x = 1
+  if (x) {
+    console.log(to.path)
     if (to.path === '/login') {
       next({path: '/dashboard'});
       NProgress.done();
