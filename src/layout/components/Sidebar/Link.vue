@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import {isExternal} from '@/utils/validata'
+import {isExternal} from '@/utils/validate'
 
 export default {
+  name: 'AppLink',
   props: {
     to: {
       type: String,

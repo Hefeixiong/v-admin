@@ -1,18 +1,18 @@
-import UserApi from '@/api/user/user';
-import Vue from 'vue';
-import {ACCESS_TOKEN} from "@/store/mutation-types";
-import {welcome} from '@/utils/util';
-
+import {getToken, setToken} from '@/utils/auth'
+import {getInfo, login} from '@/api/user'
+import Vue from 'vue'
+import {ACCESS_TOKEN} from '@/store/mutation-types'
+import {welcome} from '@/utils/util'
 
 const state = {
-  token: '',
+  token: getToken(),
   ID: '',
   name: '',
   welcome: '',
   avatar: '',
   roles: [],
-  info: {},
-};
+  info: ''
+}
 
 const mutations = {
   SET_TOKEN: (state, token) => {
@@ -41,52 +41,30 @@ const mutations = {
 };
 
 const actions = {
-  // user login
-  login({commit}, userInfo) {
-    const {username, password} = userInfo;
-    return new Promise((resolve, reject) => {
-      UserApi.Login({username: username.trim(), password: password}).request()
-        .then(response => {
-          const {data} = response;
-          console.log(ACCESS_TOKEN);
-          Vue.ls.set(ACCESS_TOKEN, data.token);
-          commit('SET_TOKEN', data.token);
-          commit('SET_ID', data.ID);
-          commit('SET_AVATAR', data.avatar);
-          commit('SET_NAME', data.name);
-          commit('SET_ROLES', data.roles);
-          resolve();
-        })
-        .catch(error => reject(error));
-    });
+  //user login,，没有后台api
+  login({commit} , userInfo) {
+    const {username , password} = userInfo
+    return new Promise((resolve , reject) => {
+      login({username: username.trim(), password: password}).then(response => {
+        const {data} = response
+        commit('SET_TOKEN' , data.token)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
   },
-  logout({commit}, token) {
-    return new Promise((resolve, reject) => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      Vue.ls.remove(ACCESS_TOKEN)
-      Vue.ls.remove('testUserInfo')
-      resolve()
-      // UserApi.LogOut({'token': token}).request()
-      //   .then(response => {
-      //     commit('SET_TOKEN', '');
-      //     Vue.ls.remove(ACCESS_TOKEN);
-      //     resolve();
-      //   })
-      //   .catch(error => reject(error));
-    });
-
-  },
+  //test
   testLogin({commit}) {
-    return new Promise((resolve) => {
+    return new Promise((resolve => {
       Vue.ls.set(
         ACCESS_TOKEN,
         '830b6b9c-a4f1-4532-aad3-6289ca914693',
       );
-      commit('SET_TOKEN', '830b6b9c-a4f1-4532-aad3-6289ca914693',);
-      resolve();
-    });
-
+      commit('SET_TOKEN' , '830b6b9c-a4f1-4532-aad3-6289ca914693');
+      resolve()
+    }))
   },
   GetInfo({commit}) {
     return new Promise((resolve, reject) => {
@@ -119,7 +97,7 @@ const actions = {
 
         resolve(data)
       } else {
-        UserApi.getInfo({}).request()
+        getInfo({}).request()
           .then(response => {
             console.log("getInfo");
             const {data} = response;
@@ -134,8 +112,7 @@ const actions = {
       }
     });
   }
-
-};
+}
 
 
 export default {
@@ -143,7 +120,4 @@ export default {
   state,
   mutations,
   actions
-};
-
-
-
+}

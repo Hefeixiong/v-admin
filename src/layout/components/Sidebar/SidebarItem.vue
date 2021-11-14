@@ -27,7 +27,7 @@
 
 <script>
 import path from 'path';
-import {isExternal} from '@/utils/validata';
+import {isExternal} from '@/utils/validate';
 import Item from './Item.vue';
 import AppLink from './Link.vue';
 import FixiOSBug from '@/layout/components/Sidebar/FixiOSBug.js'

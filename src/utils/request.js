@@ -9,18 +9,18 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
-    if (store.getters.token) {
+    const tokens = store.getters.token
+    if (tokens) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
     }
+    debugger
     return config
   },
   error => {
@@ -29,7 +29,6 @@ service.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-
 // response interceptor
 service.interceptors.response.use(
   /**
