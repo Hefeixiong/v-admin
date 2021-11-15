@@ -28,13 +28,13 @@
 <script>
 import path from 'path';
 import {isExternal} from '@/utils/validate';
-import Item from './Item.vue';
-import AppLink from './Link.vue';
 import FixiOSBug from '@/layout/components/Sidebar/FixiOSBug.js'
+import Item from '@/layout/components/Sidebar/Item'
+import AppLink from '@/layout/components/Sidebar/Link'
 
 export default {
   name: 'SidebarItem',
-  components: {Item, AppLink},
+  components: {Item,AppLink},
   mixins: [FixiOSBug],
   props: {
     // route object

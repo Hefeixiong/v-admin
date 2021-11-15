@@ -17,7 +17,6 @@ router.beforeEach(async (to, from, next) => {
   const token = Vue.ls.get(ACCESS_TOKEN);
   console.log(token)
   if (token) {
-    console.log(to.path)
     if (to.path === '/login') {
       next({path: '/dashboard'});
       NProgress.done();

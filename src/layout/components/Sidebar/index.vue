@@ -32,6 +32,7 @@ export default {
     activeMenu() {
       const route = this.$route
       const { meta , path } = route
+      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -39,9 +40,7 @@ export default {
     },
     routes(){
       // debugger
-      const x = this.$store.state.permission.routes
-      console.log('item route',x)
-      return x
+      return this.$store.state.permission.routes
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo
