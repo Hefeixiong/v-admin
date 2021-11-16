@@ -111,6 +111,15 @@ const actions = {
           .catch(error => reject(error));
       }
     });
+  },
+  logout({commit}, token) {
+    return new Promise((resolve,reject) => {
+      commit('SET_TOKEN' , '')
+      commit('SET_ROLES' , [])
+      Vue.ls.remove(ACCESS_TOKEN)
+      Vue.ls.remove('testUserInfo')
+      resolve()
+    })
   }
 }
 

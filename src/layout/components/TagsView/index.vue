@@ -15,12 +15,12 @@
       >
         {{ tag.title }}
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"/>
-                <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-                  <li @click="refreshSelectedTag(selectedTag)">重新打开</li>
-                  <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前</li>
-                  <li @click="closeOthersTags">关闭其他</li>
-                  <li @click="closeAllTags(selectedTag)">关闭全部</li>
-                </ul>
+<!--                <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">-->
+<!--                  <li @click="refreshSelectedTag(selectedTag)">重新打开</li>-->
+<!--                  <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前</li>-->
+<!--                  <li @click="closeOthersTags">关闭其他</li>-->
+<!--                  <li @click="closeAllTags(selectedTag)">关闭全部</li>-->
+<!--                </ul>-->
       </router-link>
 
     </scroll-pane>
@@ -30,7 +30,7 @@
 
 <script>
 import ScrollPane from '@/layout/components/TagsView/ScrollPane';
-// import path from 'path';
+import path from 'path';
 
 export default {
   name: 'TagsView',
@@ -71,28 +71,28 @@ export default {
     isAffix(tag) {
       return tag.meta && tag.meta.affix;
     },
-    // filterAffixTags(routes, basePath = '/') {
-    //   let tags = [];
-    //   routes.forEach(route => {
-    //     if (route.meta && route.meta.affix) {
-    //       const tagPath = path.resolve(basePath, route.path);
-    //       tags.push({
-    //         fullPath: tagPath,
-    //         path: tagPath,
-    //         name: route.name,
-    //         meta: {...route.meta}
-    //
-    //       });
-    //     }
-    //     if (route.children) {
-    //       const tempTags = this.filterAffixTags(route.children, route.path);
-    //       if (tempTags.length >= 1) {
-    //         tags = [...tags, ...tempTags];
-    //       }
-    //     }
-    //   });
-    //   return tags;
-    // },
+    filterAffixTags(routes, basePath = '/') {
+      let tags = [];
+      routes.forEach(route => {
+        if (route.meta && route.meta.affix) {
+          const tagPath = path.resolve(basePath, route.path);
+          tags.push({
+            fullPath: tagPath,
+            path: tagPath,
+            name: route.name,
+            meta: {...route.meta}
+
+          });
+        }
+        if (route.children) {
+          const tempTags = this.filterAffixTags(route.children, route.path);
+          if (tempTags.length >= 1) {
+            tags = [...tags, ...tempTags];
+          }
+        }
+      });
+      return tags;
+    },
     initTag() {
       const affixTags = this.affixTags = this.filterAffixTags(this.routes);
       for (const tag of affixTags) {

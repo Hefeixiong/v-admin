@@ -15,7 +15,6 @@ import {ACCESS_TOKEN} from "@/store/mutation-types";
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
   const token = Vue.ls.get(ACCESS_TOKEN);
-  console.log(token)
   if (token) {
     if (to.path === '/login') {
       next({path: '/dashboard'});
