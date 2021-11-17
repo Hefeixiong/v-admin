@@ -23,6 +23,17 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
   //测试组件
   {
     path: '/test',
@@ -34,7 +45,7 @@ export const constantRoutes = [
     component: () => import('@/components/Hamburger/index'),
     hidden: true
   }
-]
+];
 //动态路由
 export const asyncRoutes = [
   {
