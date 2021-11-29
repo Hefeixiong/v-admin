@@ -1,25 +1,22 @@
-import {getToken, setToken} from '@/utils/auth'
+import {getToken, removeToken, setToken} from '@/utils/auth'
 import {getInfo, login} from '@/api/user'
-import Vue from 'vue'
-import {ACCESS_TOKEN} from '@/store/mutation-types'
+import router, {resetRouter} from '@/router'
+
 
 const state = {
   token: getToken(),
-  ID: '',
   name: '',
-  welcome: '',
+  ID: '',
   avatar: '',
   roles: [],
-  info: ''
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token;
   },
-  SET_NAME: (state, {name, welcome}) => {
+  SET_NAME: (state, {name}) => {
     state.name = name;
-    state.welcome = welcome;
   },
   SET_ID: (state, ID) => {
     state.ID = ID;
@@ -29,31 +26,21 @@ const mutations = {
     state.avatar = avatar;
   },
   SET_ROLES: (state, roles) => {
-    state.roles = roles;
+    state.roles = roles
   },
-  SET_INFO: (state, info) => {
-    state.info = info;
-  },
-  REMOVE_TOKEN: (state) => {
-    state.token = '';
-  }
 };
 
 const actions = {
   //user login,，没有后台api
   login({commit} , userInfo) {
     const {username , password} = userInfo
-    debugger
     return new Promise((resolve , reject) => {
       login({username: username.trim(), password: password}).then(response => {
         const data = response
-        console.log(data.token)
         commit('SET_TOKEN' , data.token)
         setToken(data.token)
         resolve()
-        debugger
       }).catch(error => {
-        debugger
         reject(error)
       })
     })
@@ -62,22 +49,21 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
-        debugger
+        const data = response
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { roles, name, avatar, introduction } = data
-
+        console.log('userinfo',data)
+        const { roles, name, avatar, id } = data
         // roles must be a non-empty array
+        console.log('准备设置roles',roles)
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_ID', id)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -85,16 +71,56 @@ const actions = {
     })
   },
 
-  logout({commit}, token) {
-    return new Promise((resolve,reject) => {
-      commit('SET_TOKEN' , '')
-      commit('SET_ROLES' , [])
-      Vue.ls.remove(ACCESS_TOKEN)
-      Vue.ls.remove('testUserInfo')
+  // user logout
+  // logout({ commit, state, dispatch }) {
+  //   return new Promise((resolve, reject) => {
+  //     logout(state.token).then(() => {
+  //       commit('SET_TOKEN', '')
+  //       commit('SET_ROLES', [])
+  //       removeToken()
+  //       resetRouter()
+  //
+  //       // reset visited views and cached views
+  //       // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+  //       dispatch('tagsView/delAllViews', null, { root: true })
+  //
+  //       resolve()
+  //     }).catch(error => {
+  //       reject(error)
+  //     })
+  //   })
+  // },
+  //
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
       resolve()
     })
+  },
+
+  // dynamically modify permissions
+  async changeRoles({ commit, dispatch }, role) {
+    const token = role + '-token'
+
+    commit('SET_TOKEN', token)
+    setToken(token)
+
+    const { roles } = await dispatch('getInfo')
+
+    resetRouter()
+
+    // generate accessible routes map based on roles
+    const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+    // dynamically add accessible routes
+    router.addRoutes(accessRoutes)
+
+    // reset visited views and cached views
+    dispatch('tagsView/delAllViews', null, { root: true })
   }
 }
+
 
 
 export default {

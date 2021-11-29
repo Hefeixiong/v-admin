@@ -20,7 +20,7 @@ export const constantRoutes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: {title: 'Dashboard' , icon: 'dashboard' , affix: true}
+        meta: {title: 'Dashboard' , icon: 'dashboard' }
       }
     ]
   },
@@ -52,28 +52,31 @@ export const asyncRoutes = [
   {
     path: '/form',
     component: Layout,
-    meta: {title: 'Form', icon: 'form', roles: ['ops']},
+    meta: {title: 'Form', icon: 'form', roles: ['admin']},
     children: [
       {
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: {title: 'Form', icon: 'form', roles: ['ops']}
+        meta: {title: 'Form', icon: 'form', roles: ['admin']}
       }
     ]
   },
   tableRouter
 ]
 
-//
-const router  = new Router({
-  scrollBehavior: () => ({y:0}),
-  routes: constantRoutes,
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
-// export function resetRouter() {
-//   const newRouter = createRouter()
-//   router.matcher = newRouter.matcher
-// }
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

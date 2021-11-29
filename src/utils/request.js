@@ -42,7 +42,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res.code)
+    console.log('获取接口数据code',res.code)
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
@@ -63,6 +63,7 @@ service.interceptors.response.use(
           })
         })
       }
+      debugger
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       console.log(res)
