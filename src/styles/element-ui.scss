@@ -14,7 +14,12 @@
 .el-upload__input {
   display: none;
 }
-
+.el-menu-item{
+  color: white;
+}
+.el-submenu__title{
+  color: white;
+}
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {

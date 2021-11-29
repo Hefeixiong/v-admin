@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/layout'
+import tableRouter from '@/router/modules/table'
 
 Vue.use(Router)
 //静态路由
@@ -60,8 +61,8 @@ export const asyncRoutes = [
         meta: {title: 'Form', icon: 'form', roles: ['ops']}
       }
     ]
-  }
-
+  },
+  tableRouter
 ]
 
 //
