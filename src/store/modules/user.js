@@ -15,7 +15,7 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token;
   },
-  SET_NAME: (state, {name}) => {
+  SET_NAME: (state, name) => {
     state.name = name;
   },
   SET_ID: (state, ID) => {
@@ -53,8 +53,8 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-        console.log('userinfo',data)
-        const { roles, name, avatar, id } = data
+        console.log('get userinfo is',data)
+        const { roles, name, avatar, user_id } = data
         // roles must be a non-empty array
         console.log('准备设置roles',roles)
         if (!roles || roles.length <= 0) {
@@ -63,7 +63,7 @@ const actions = {
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
-        commit('SET_ID', id)
+        commit('SET_ID', user_id)
         resolve(data)
       }).catch(error => {
         reject(error)

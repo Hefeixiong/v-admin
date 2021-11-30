@@ -44,14 +44,13 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes;
     state.routes = constantRoutes.concat(routes);
-    debugger
   }
 };
 
 const actions = {
   generateRoutes({commit}, roles) {
     return new Promise(((resolve) => {
-      console.log('是有有权限',roles.includes('admin'))
+      console.log('是有有权限:admin',roles.includes('admin'))
       let accessedRoutes;
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || [];
@@ -61,7 +60,6 @@ const actions = {
       }
       commit('SET_ROUTES', accessedRoutes);
       resolve(accessedRoutes);
-      debugger
     }));
   }
 };

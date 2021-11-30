@@ -65,7 +65,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      console.log(res)
+      console.log('获取成功，返回response')
       return res
     }
   },

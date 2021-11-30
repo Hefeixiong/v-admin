@@ -20,6 +20,7 @@
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
+    "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "sortablejs": "^1.14.0",
     "svg-sprite-loader-mod": "^4.1.6-mod1",
@@ -50,8 +51,7 @@
     "svgo": "1.2.2",
     "svgo-loader": "^2.2.1",
     "vue-ls": "^3.2.2",
-    "vue-template-compiler": "2.6.10",
-    "nprogress": "^0.2.0"
+    "vue-template-compiler": "2.6.10"
   },
   "browserslist": [
     "> 1%",
