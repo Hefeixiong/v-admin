@@ -63,7 +63,6 @@ service.interceptors.response.use(
           })
         })
       }
-      debugger
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       console.log(res)

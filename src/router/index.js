@@ -38,7 +38,7 @@ export const constantRoutes = [
   //测试组件
   {
     path: '/test',
-    component: () => import('@/views/test/test-svg'),
+    component: Layout,
     hidden: true
   },
   {
@@ -62,7 +62,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  tableRouter
+  // tableRouter
 ]
 
 const createRouter = () => new Router({
@@ -74,9 +74,9 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
+// export function resetRouter() {
+//   const newRouter = createRouter()
+//   router.matcher = newRouter.matcher // reset router
+// }
 
 export default router
