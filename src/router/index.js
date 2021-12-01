@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/layout'
-import tableRouter from '@/router/modules/table'
+import nested from '@/router/modules/nested'
+// import tableRouter from '@/router/modules/table'
 
 Vue.use(Router)
 //静态路由
@@ -63,10 +64,11 @@ export const asyncRoutes = [
     ]
   },
   // tableRouter
+  nested
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
