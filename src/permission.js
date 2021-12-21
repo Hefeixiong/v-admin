@@ -26,7 +26,6 @@ router.beforeEach(async (to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const {roles}  = await store.dispatch('user/getInfo')
-          console.log('执行了user/getInfo')
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           // dynamically add accessible routes
@@ -34,13 +33,11 @@ router.beforeEach(async (to, from, next) => {
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           next({ to, replace: true })
-          console.log('跳转到下一个路由',to)
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
+          Message.error(error || 'Has  Error')
           next(`/login?redirect=${to.path}`)
-          console.log(error)
           NProgress.done()
         }
       }

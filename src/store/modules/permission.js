@@ -50,7 +50,6 @@ const mutations = {
 const actions = {
   generateRoutes({commit}, roles) {
     return new Promise(((resolve) => {
-      console.log('是有有权限:admin',roles.includes('admin'))
       let accessedRoutes;
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || [];
