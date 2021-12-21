@@ -1,59 +1,54 @@
 <template>
-  <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
-    <button @click="getInfo">userinfo</button>
-    <button @click="addSidebar">动态添加侧边栏</button>
-  </div>
+
+  <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      <span>用户信息</span>
+    </div>
+    <div class="text item">
+      头像：<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" alt="">
+    </div>
+    <div class="text item">
+      用户名：{{ name }}
+    </div>
+    <div class="text item">
+      权限：{{ roles }}
+    </div>
+    <div class="text item">
+      token：{{ token }}
+    </div>
+  </el-card>
+
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import router from '@/router';
-import Layout from '@/layout';
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
-      'name'
+      'name',
+      'roles',
+      'avatar',
+      'token'
     ])
-  },
-  methods: {
-    getInfo() {
-      console.log(this.$store.state.user);
-
-    },
-    addSidebar() {
-      let r1 = [
-        {
-          path: '/form',
-          component: Layout,
-          meta: {title: 'Form', icon: 'form', roles: ['ops']},
-          children: [
-            {
-              path: 'index',
-              name: 'Form',
-              component: () => import('@/views/form/index'),
-              meta: {title: 'Form', icon: 'form', roles: ['ops']}
-            }
-          ]
-        }];
-      router.addRoutes(r1);
-
-    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
+.box-card {
     margin: 30px;
+   .user-avatar {
+    height: 64px;
+    width: 64px;
+  }
+  .text {
+    border-color: #7d7d7f ;
+    padding-top: 6px;
+  }
   }
 
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
+
+
 </style>
